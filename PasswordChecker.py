@@ -1,6 +1,5 @@
 
 def pwchecker():
-
     mypwrd = str(input("Please insert your password:"))
 
     if  mypwrd.isalpha() and len(mypwrd) >= 8 and len(mypwrd) <= 14:

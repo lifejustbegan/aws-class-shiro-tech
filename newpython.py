@@ -7,7 +7,7 @@ def my_password(pwd):
         
         else:
                 print("please enter a correct password")
-                print("password hint:password must be greater than 8 or <14 characters")
+                print("password hint:password must be greater than 8 or <14 characters and can't be a digit")
         
         
         

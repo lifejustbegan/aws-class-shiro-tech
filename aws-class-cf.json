@@ -1,0 +1,100 @@
+
+{
+   "Resources" : {
+   "devVPC" : {
+      "Type" : "AWS::EC2::VPC",
+      "Properties" : {
+         "CidrBlock" : "10.0.0.0/26",
+         "EnableDnsSupport" : "true",
+         "EnableDnsHostnames" : "true",
+         "InstanceTenancy" : "default",
+         "Tags" : [ {"Key" : "stack", "Value" : "dev"}]
+      }
+    },
+   
+    "devPublicSubnet" : {
+         "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+               "AvailabilityZone" : "us-east-1a",
+               "CidrBlock" : "10.0.0.0/27",
+               "MapPublicIpOnLaunch" : true,
+               "VpcId" : { "Ref" : "devVPC" },
+               "Tags" : [ {"Key" : "name", "Value" : "dev-public-subnet"}]
+         }
+      },
+    "devPrivateSubnet" : {
+         "Type" : "AWS::EC2::Subnet",
+         "Properties" : {
+            "AvailabilityZone" : "us-east-1a",
+            "CidrBlock" : "10.0.0.32/27",
+            "MapPublicIpOnLaunch" : false,
+            "VpcId" : { "Ref" : "devVPC" },
+            "Tags" : [ {"Key" : "name", "Value" : "dev-private-subnet"}]
+         }
+      },
+   "devIGW" : {
+         "Type" : "AWS::EC2::InternetGateway",
+         "Properties" : {
+            "Tags" : [ {"Key" : "stack", "Value" : "dev"}]
+         }
+      }
+   },
+   "AttachGateway" : {
+      "Type" : "AWS::EC2::VPCGatewayAttachment",
+      "Properties" : {
+         "VpcId" : { "Ref" : "devVPC" },
+         "InternetGatewayId" : { "Ref" : "devIGW" }
+       }
+   },
+   "myRouteTable" : {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+         "VpcId" : { "Ref" : "devVPC" },
+         "Tags" : [ { "Key" : "stack", "Value" : "production" } ]
+      }
+   },
+   "MyEC2Instance" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+         "ImageId" : "ami-79fd7eee",
+         "KeyName" : "newkp",
+         "BlockDeviceMappings" : [
+            {
+               "DeviceName" : "/dev/sdm",
+               "Ebs" : {
+                 "VolumeType" : "io1",
+                 "Iops" : "200",
+                 "DeleteOnTermination" : "false",
+                 "VolumeSize" : "20"
+               }
+             }, 
+             {
+               "DeviceName" : "/dev/sdk",
+               "NoDevice" : {}
+             }
+         ]
+      }
+   },
+   "InstanceSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+         "GroupDescription" : "Allow http to client host",
+         "VpcId" : {"Ref" : "devVPC"},
+         "SecurityGroupIngress" : [{
+            "IpProtocol" : "tcp",
+            "FromPort" : 80,
+            "ToPort" : 80,
+            "CidrIp" : "0.0.0.0/0"
+         }],
+         "SecurityGroupEgress" : [{
+            "IpProtocol" : "tcp",
+            "FromPort" : 80,
+            "ToPort" : 80,
+            "CidrIp" : "0.0.0.0/0"
+         }]
+      }
+   }
+}
+
+
+

@@ -1,0 +1,70 @@
+{"Resources" :{
+    "vpcdev2" : {
+       "Type" : "AWS::EC2::VPC",
+       "Properties" : {
+          "CidrBlock" : "10.0.0.0/24",
+          "EnableDnsSupport" : "true",
+          "EnableDnsHostnames" : "true",
+          "InstanceTenancy" : "default",
+          "Tags" : 
+          [ {"Key" : "stack","Value" : "dev"},
+           { "Key" : "Name", "Value" : "dev-cfi-vpc"} ]
+       }
+     },
+"privatesubnetdev2" : {
+ "Type" : "AWS::EC2::Subnet",
+ "Properties" : {
+ "VpcId" : {"Ref": "vpcdev1"},
+ "CidrBlock" : "10.0.0.0/28",
+ "AvailabilityZone" : "us-east-1a",
+ "MapPublicIpOnLaunch" : "false",
+ "Tags" : [ 
+            {"Key" : "stack", "Value" : "devpvtsbnet" },
+            {"Key" : "Name", "Value" : "dev-cfi-pvtsnet"} 
+          
+          ]
+}
+},
+"publicesubnetdev2" : {
+"Type" : "AWS::EC2::Subnet",
+"Properties" : {
+"VpcId" : {"Ref": "vpcdev1"},
+"CidrBlock" : "10.0.0.16/28",
+"AvailabilityZone" : "us-east-1a",
+"MapPublicIpOnLaunch" : "true",
+"Tags" : [ { "Key" : "stack", "Value" : "devpubsbnet" },
+       {"Key" : "Name", "Value" : "dev-cfi-pubsnet"}]
+}
+},
+"MyEC2lnxInstnce2" : {
+"Type" : "AWS::EC2::Instance",
+"Properties" : {
+ "ImageId" : "ami-0c2b8ca1dad447f8a",
+ "BlockDeviceMappings" : [
+    {
+       "DeviceName" : "/dev/sda1",
+       "Ebs" : {
+         "VolumeType" : "io1",
+         "Iops" : "400",
+         "DeleteOnTermination" : "true",
+         "VolumeSize" : "8"
+       }
+     }, 
+     {
+       "DeviceName" : "/dev/sdda1",
+       "NoDevice" : {}
+     }
+ ],
+ "NetworkInterfaces": [ {
+    "AssociatePublicIpAddress": "true",
+    "DeviceIndex": "0",
+    "SubnetId": { "Ref" : "publicesubnetdev" }
+  } ],
+
+  "Tags" : [ {"Key" : "Name", "Value" : "dev-cfi-instnc"},
+             {"Key" : "Launch time", "Value" : "23/08"} ]
+
+}
+}
+} 
+}

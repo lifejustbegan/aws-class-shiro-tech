@@ -1,4 +1,4 @@
-{"Resources" :{
+{"awsResources" :{
     "vpcdev2" : {
        "Type" : "AWS::EC2::VPC",
        "Properties" : {
@@ -11,7 +11,7 @@
            { "Key" : "Name", "Value" : "dev-cfi-vpc"} ]
        }
      },
-"privatesubnetdev2" : {
+"awsprivatesubnetdev2" : {
  "Type" : "AWS::EC2::Subnet",
  "Properties" : {
  "VpcId" : {"Ref": "vpcdev1"},
@@ -25,7 +25,7 @@
           ]
 }
 },
-"publicesubnetdev2" : {
+"awspublicesubnetdev2" : {
 "Type" : "AWS::EC2::Subnet",
 "Properties" : {
 "VpcId" : {"Ref": "vpcdev1"},
@@ -36,7 +36,7 @@
        {"Key" : "Name", "Value" : "dev-cfi-pubsnet"}]
 }
 },
-"MyEC2lnxInstnce2" : {
+"awsEC2lnxInstnce2" : {
 "Type" : "AWS::EC2::Instance",
 "Properties" : {
  "ImageId" : "ami-0c2b8ca1dad447f8a",

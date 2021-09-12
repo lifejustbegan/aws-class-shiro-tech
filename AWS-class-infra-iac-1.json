@@ -1,0 +1,31 @@
+
+{
+"Resources" : {
+"AwsClassIac" : {
+   "Type" : "AWS::EC2::VPC",
+   "Properties" : {
+         "CidrBlock": "10.0.0.0/26",
+         "EnableDnsSupport": true,
+         "EnableDnsHostnames": true,
+        
+         "Tags" : [ {"Key" : "Stack", "Value" : "dev" } ]
+      }
+},
+"AwsClassIacSubnet" : {
+    "Type" : "AWS::EC2::Subnet",
+    "Properties" : {
+         "VpcId" : { "Ref" : "AwsClassIac" },
+         "CidrBlock" : "10.0.0.0/26",
+         "AvailabilityZone" : "us-east-1a",
+         "Tags" : [ { "Key" : "stack", "Value" : "dev" } ]
+        }
+     },
+"AwsClassIacIgw" : {
+    "Type" : "AWS::EC2::InternetGateway",
+    "Properties" : {
+         "Tags" : [ {"Key" : "stack", "Value" : "dev"}]
+        }
+     }
+
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "Resources" : {
+"AwsClassIac" : {
+   "Type" : "AWS::EC2::VPC",
+   "Properties" : {
+      "CidrBlock" : "10.0.0.0/26",
+      "EnableDnsSupport" : "true",
+      "EnableDnsHostnames" : "true",
+      "InstanceTenancy" : "default",
+      "Tags" : [ {"Key" : "stack", "Value" : "dev"} ]
+   }
+}
+}
+}

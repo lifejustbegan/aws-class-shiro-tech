@@ -21,7 +21,7 @@ r2 = iam.client('ec2')     # returns dictionary , more detailed , all resource
 
 x = "list of all instance"
 
-ins = r1.Instance('i-0d9ef13d59f7edcfa')    # resource -> class -> attribute 
+ins = r1.Instance('i-0d9ef1dssafdSDSAFD')    # resource -> class -> attribute 
 
 allec2 = r2.describe_instances()            # client -> method 
 
@@ -30,7 +30,7 @@ st = ins.state
 
 # task start all instances 
 # then stop instances that were stopped before 
-# instances currenty in start  i-03e3d9265e4d182e1 , i-03e3d9265e4d182e1, i-0fef7353f1b356c9f
+# instances currenty in start  
 
 
 # list of all instances that are stopped 
